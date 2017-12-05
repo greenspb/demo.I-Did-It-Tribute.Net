@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+<title>Assignment #4</title>
+<style type="text/css">
+  .classWithPadding { margin:5px; padding:5px; }
+  td {
+    text-align: center;
+    border: 0.5px solid black;
+  }
+  input[type="submit"], form.submitted {
+    background: #EAEAEA;
+  }
+  form.submitted > input.input.correct {
+    background: #A5FF8F;
+  }
+  form.submitted > input.input.incorrect {
+    background: #E52027;
+  }
+  .greenCheck {
+    color: #A5FF8F;
+  }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $(".greenCheck").hide();
+    $(".redX").hide();
+});
+
+$(document).ready(function(){
+    $(":submit").click(function(){
+      $(this).parent().attr("class","submitted");
+      if ( $(this).prev().val() == $(this).prop("name") ) {
+        $(".greenCheck[data-id='" + $(this).data("id")  + "']").show();
+        $(".redX[data-id='" + $(this).data("id")  + "']").hide();
+        $(".input[data-id='" + $(this).data("id")  + "']").attr("class","input correct");
+      } else {
+        $(".greenCheck[data-id='" + $(this).data("id")  + "']").hide();
+        $(".redX[data-id='" + $(this).data("id")  + "']").show();
+        $(".input[data-id='" + $(this).data("id")  + "']").attr("class","input incorrect");
+      }
+    });
+});
+</script>
+</head>
+
+<body>
+
+<!--
+  <div class="container-fluid"> <iframe src="http://demo.i-did-it-tribute.net/alefbet.html" height="77"  width="100%"></iframe></div>
+  <div class="container-fluid"> <iframe src="http://demo.i-did-it-tribute.net/vowels.html" height="77"  width="100%"></iframe></div>
+-->
+
+
+<div class="container-fluid">
+
+<p> Transliterate each Hebrew word (consonants + vowels) into English letters <br> </p>
+
+<div class="row align-items-center">
+
+<div class="col-xs-1"> <div class="classWithPadding"> &zwnj; </div> </div>
+
+<div class="col-xs-3">
+ <p align="center" style="font-size:11px; margin-bottom:0em; font-weight:bold;"> Consonants 
+<script>
+  alefbet = ["&#1488;","&#64305;","&#1489;","&#1490;","&#1491;","&#1492;","&#1493;","&#1494;","&#1495;","&#1496;","&#1497;","&#64315;","&#1499;","&#1498;","&#1500;","&#1502;","&#1501;","&#1504;","&#1503;","&#1505;","&#1506;","&#64324;","&#1508;","&#1507;","&#1510;","&#1509;","&#1511;","&#1512;","&#64298;","&#64299;","&#1514;"];
+  hebLetter = ["Alef","Bet","Vet","Gimel","Dalet","He","Vav","Zayin","Chet","Tet","Yod","Kaf","Chaf","Final Chaf","Lamed","Mem","Final Mem","Nun","Final Nun","Samech","Aayin","Pe","Fe","Final Fe","Tsadi","Final Tsadi","Kaf","Resh","Shin","Sin","Tav"];
+  sound = ["A","b","v","g","d","h","v","z","ch","t","y","c","ch","ch","l","m","m","n","n","s","A","p","f","f","tz","tz","k","r","sh","s","t"];
+</script>
+
+<table>
+<script>
+for (i = 0; i < alefbet.length; i++) {
+  document.write("<tr> <td style='font-size:12px;'>" + alefbet[i] + 
+                 "<td style='font-size:10px;'>" + hebLetter[i] + 
+                 "<td style='font-size:12px;'>" + sound[i]
+  );
+}
+</script>
+</table>
+
+</div>
+
+<div class="col-xs-1"> <div class="classWithPadding"> &zwnj; </div> </div>
+
+<div class="col-xs-3">
+ <p align="center" style="font-size:11px; margin-bottom:0em; font-weight:bold;"> Vowels
+<script>
+  alefbet = ["&#1463;    &#8291;","&#1464;    &#8291;","&#1462;    &#8291;","&#1461;    &#8291;","&#1465;    &#8291;","&#64331;","&#1467; &#8291;","&#64309;","&#1460    &#8291;","&#1497;    &#1460;    &#8291; ","&#1456;    &#8291;","&#1463; &#1456;    &#8291;","&#1464; &#1456;    &#8291;","&#1462; &#1456;    &#8291;"];
+  alefbet = ["&#1463;X","&#1464;X","&#1462;X","&#1461;X","&#1465;X","&#64331;","&#1467;X","&#64309;","&#1460;X","&#1497;    &#1460;X","&#1456;X","&#1458;G","&#1459;G","&#1457;G"];
+  hebLetter = ["Patach","Kamatz","Segol","Tzeirei","Cholam","Cholam Malei","Kubutz","Shuruk","Chirik","Chirik Malei","Sh'va","Chataf Patch","Chataf Kamatz","Chataf Segol"];
+  sound = ["a","a","e","e","o","o","u","u","i","i","e","a","a","e"]
+</script>
+
+<table>
+<script>
+for (i = 0; i < alefbet.length; i++) {
+  document.write("<tr> <td style='font-size:12px;'>" + alefbet[i] +
+                 "<td style='font-size:10px;'>" + hebLetter[i] +
+                 "<td style='font-size:12px;'>" + sound[i]
+  );
+}
+</script>
+</table>
+
+</div>
+
+<div class="col-xs-1"> <div class="classWithPadding"> &zwnj; </div> </div>
+
+<div class="col-xs-3">
+
+<script>
+  words = [ {key: "perutah", value: "פְּרוּטָה"} ]
+</script>
+
+<div>
+  <div dir="rtl">
+  <!-- perutah -->
+  פְּרוּטָה
+  </div>
+  <form action="javascript:">
+  <input data-id="1" class="input">
+  <input type="submit" name="perutah" value="Submit" data-id="1">
+    <span class="greenCheck" data-id="1"> &#x2713; </span>
+    <span class="redX" data-id="1"> &#x274C; </span>
+  </form>
+</div>
+
+<!-- end "container-fluid" div -->
+</div>
+
+
+<!-- end "row" div -->
+</div>
+

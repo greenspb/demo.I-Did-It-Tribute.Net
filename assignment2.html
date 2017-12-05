@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+<title>The Vowels</title>
+<style type="text/css">
+  .classWithPadding { margin:5px; padding:5px; }
+  td {
+    text-align: center;
+    border: 0.5px solid black;
+  }
+  input[type="submit"], form.submitted {
+    background: #EAEAEA;
+  }
+  form.submitted > input.input.correct {
+    background: #A5FF8F;
+  }
+  form.submitted > input.input.incorrect {
+    background: #E52027;
+  }
+  .greenCheck {
+    color: #A5FF8F;
+  }
+ .he, .he p {
+ 	font-family : Ezra Sil;
+ 	direction : rtl;
+ }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="DragDropTouch.js"></script>
+<script>
+$(document).ready(function(){
+    $(".greenCheck").hide();
+    $(".redX").hide();
+});
+
+$(document).ready(function(){
+    $(":submit").click(function(){
+      $(this).parent().attr("class","submitted");
+      if ( $(this).prev().val() == $(this).prop("name") ) {
+        $(".greenCheck[data-id='" + $(this).data("id")  + "']").show();
+        $(".redX[data-id='" + $(this).data("id")  + "']").hide();
+        $(".input[data-id='" + $(this).data("id")  + "']").attr("class","input correct");
+      } else {
+        $(".greenCheck[data-id='" + $(this).data("id")  + "']").hide();
+        $(".redX[data-id='" + $(this).data("id")  + "']").show();
+        $(".input[data-id='" + $(this).data("id")  + "']").attr("class","input incorrect");
+      }
+    });
+});
+
+</script>
+</head>
+<body>
+
+<div class="container-fluid">
+
+<h4 align="center"> The Vowels </h4>
+<div style="font-size:12px" align="center"> <a href="mailto:benjamin.greenspan@gmail.com?subject=The Alephbet">  Contact the author </a> </div>
+
+
+<div class="row">
+<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"> <div class="classWithPadding"> &zwnj; </div> </div>
+<h4>  </h4>
+<div class="col-xs-11 col-sm11 col-md-11 col-lg-11">
+
+<!-- concept -->
+<div>
+
+<!-- need to add the LRM character after the last voweled hebrew character. HTML entity: &#x200E; This tells the browser to interpret the vowel as left-to-right reading -->
+<p style="font-size:10px; font-weight:lighter;" dir="rtl"> <span class="he"> &#x200E; &emsp; &#x05B2;G &emsp; &#x200E;&#1463;X &emsp; &#x200E;&#1464;X &ensp; </span> a &#x2000; &#x2000; .I <span class="he"> &#x05D0;&#1463;&#64305;&#1464;&#x05D0; &emsp; &#1495;&#x05B2;&#1493;&#1464;&#1497;&#1464;&#1492; </span> </p>
+<p style="font-size:10px; font-weight:lighter;" dir="rtl"> <span class="he"> </span> e &#x2000; &emsp14; .II </p>
+<p style="font-size:10px; font-weight:lighter;" dir="rtl"> i &#x2000; &#8198; .III </p>
+<p style="font-size:10px; font-weight:lighter;" dir="rtl"> o &#x2000; .IV </p>
+<p style="font-size:10px; font-weight:lighter;" dir="rtl"> u &emsp; .V </p>
+
+<div style="margin-bottom:18px;"> &#x2000; </div>
+
+<!-- end "concept" -->
+</div>
+

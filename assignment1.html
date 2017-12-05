@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+<title>The Alphabet</title>
+<style type="text/css">
+  .classWithPadding { margin:5px; padding:5px; }
+  td {
+    text-align: center;
+    border: 0.5px solid black;
+  }
+  input[type="submit"], form.submitted {
+    background: #EAEAEA;
+  }
+  form.submitted > input.input.correct {
+    background: #A5FF8F;
+  }
+  form.submitted > input.input.incorrect {
+    background: #E52027;
+  }
+  .greenCheck {
+    color: #A5FF8F;
+  }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="DragDropTouch.js"></script>
+<script>
+$(document).ready(function(){
+    $(".greenCheck").hide();
+    $(".redX").hide();
+});
+
+$(document).ready(function(){
+    $(":submit").click(function(){
+      $(this).parent().attr("class","submitted");
+      if ( $(this).prev().val() == $(this).prop("name") ) {
+        $(".greenCheck[data-id='" + $(this).data("id")  + "']").show();
+        $(".redX[data-id='" + $(this).data("id")  + "']").hide();
+        $(".input[data-id='" + $(this).data("id")  + "']").attr("class","input correct");
+      } else {
+        $(".greenCheck[data-id='" + $(this).data("id")  + "']").hide();
+        $(".redX[data-id='" + $(this).data("id")  + "']").show();
+        $(".input[data-id='" + $(this).data("id")  + "']").attr("class","input incorrect");
+      }
+    });
+});
+
+</script>
+</head>
+<body>
+
+<div class="container-fluid">
+
+<h4 align="center"> האלף–בית</41>
+<h4 align="center"> The Alphabet </h4>
+<div style="font-size:12px" align="center"> <a href="mailto:benjamin.greenspan@gmail.com?subject=The Alephbet">  Contact the author </a> </div>
+
+
+<div class="row">
+<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"> <div class="classWithPadding"> &zwnj; </div> </div>
+<h4>  </h4>
+<div class="col-xs-11 col-sm11 col-md-11 col-lg-11">
+
+<!-- daggesh -->
+<div>
+<span style="font-size:10px; font-weight:lighter;"> Drag the letters that make a different sound when they have a dot in the middle </span> <br> <br>
+
+<script>
+  alefbet = ["&#1488;","&#64305;","&#1489;","&#1490;","&#1491;","&#1492;","&#1493;","&#1494;","&#1495;","&#1496;","&#1497;","&#64315;","&#1499;&#1498;","&#1500;","&#1502;&#1501;","&#1504;&#1503;","&#1505;","&#1506;","&#64324;","&#1508;&#1507;","&#1510;","&#1509;","&#1511;","&#1512;","&#64298;","&#64299;","&#1514;"];
+  hebLetter = ["Alef","Bet","Vet","Gimmel","Dalet","He","Vav","Zayin","Chet","Tet","Yod","Kaf","Chaf","Lamed","Mem","Nun","Samech","Aayin","Pe","Fe","Tsadi","","Kaf","Resh","Shin","Sin","Tav"];
+  hebLetter = ["Alef","Bet","Vet","gimmel","Dalet","He","Vav","Zayin","Chet","Tet","Yod","Kof","Chaf","lamed","mem","Nun","samech","Aayin","Pe","Fe","tsadi","final tsadi","Kaf","Resh","shin","sin","Tav"];
+  sound = ["A","b","v","g","d","h","v","z","ch","t","y","c","ch","l","m","n","s","A","p","f","tz","","k","r","sh","s","t"];
+  sound = ["A","B","v","g","d","h","v","z","ch","T","y","K,Q,c","ch","l","M","n","S","A","p","F","ts","","k,Q,c","R","sh","S","T"];
+</script>
+
+<center>
+<table style="text-align:right;">
+<tr>
+<script>
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.className);
+}
+
+function dropForDaggesh(ev) {
+  var data = ev.dataTransfer.getData("text");
+  if (!data.includes('ForDaggesh')) {return;}
+  if (data.includes('Bet')||data.includes('Kof')||data.includes('Pe')) {
+      // right
+    ev.preventDefault()
+    ev.target.style.background = '#A5FF8F';
+    ev.target.appendChild(document.getElementsByClassName(data)[0]);
+    $("." + data).removeAttr("draggable");
+    $("." + data).removeAttr("ondragstart");
+    $("." + data).parent().removeAttr("ondragover");
+    $("." + data).parent().removeAttr("ondrop");
+  } else if (data.includes('Vet')||data.includes('Chaf')||data.includes('Fe')) {
+      // yellow
+    ev.preventDefault()
+    ev.target.style.background = '#f2c354';
+    setTimeout(function() {ev.target.style.background = "white";},1000); 
+  } else {
+      // wrong
+    ev.preventDefault()
+    ev.target.style.background = '#E52027';
+    setTimeout(function() {ev.target.style.background = "white";},1000);
+  }
+}
+
+for (i = alefbet.length - 18 - 1; i >= 0; i--) {
+    document.write("<td> <span draggable='true' ondragstart='drag(event)' class='" + hebLetter[i] +"ForDaggesh' style='font-size:12px;' data-sound='" + sound[i] + "'> <span style='font-weight:lighter'>" + sound[i] + "=</span>" +  alefbet[i] + " </span>");
+}
+document.write('<tr>');
+for (i = alefbet.length - 9 - 1; i >= 9; i--) {
+    document.write("<td> <span draggable='true' ondragstart='drag(event)' class='" + hebLetter[i] +"ForDaggesh' style='font-size:12px;' data-sound='" + sound[i] + "'> <span style='font-weight:lighter'>" + sound[i] + "=</span>" +  alefbet[i] + " </span>");
+}
+document.write('<tr>');
+for (i = alefbet.length - 1; i > 18 - 1; i--) {
+  if (i == 21) {
+    document.write("<td> <span draggable='true' ondragstart='drag(event)' class='" + hebLetter[i] +"ForDaggesh' style='font-size:12px;' data-sound='" + sound[i] + "'>" + alefbet[i] + " </span>");
+  } else {
+    document.write("<td> <span draggable='true' ondragstart='drag(event)' class='" + hebLetter[i] +"ForDaggesh' style='font-size:12px;' data-sound='" + sound[i] + "'> <span style='font-weight:lighter'>" + sound[i] + "=</span>" +  alefbet[i] + " </span>");
+  }
+}
+</script>
+</table>
+</center>
+
+<br>
+
+<table align="center" width="75%" height="52px">
+<tr> 
+<script>
+for (i = 0; i < 3; i++) { 
+    document.write('<td ondrop="dropForDaggesh(event)" ondragover="allowDrop(event)" width="33%">');
+}
+</script>
+</table>
+
+<div style="margin-bottom:18px;"> &#x2000; </div>
+
+<!-- end "daggesh" -->
+</div>
+
+<!-- sofit -->
+<div> 
+
+<span style="font-size:10px; font-weight:lighter;"> Drag the letters with two forms (final form on the end of a word) </span> <br> <br>
+
+<script>
+  alefbet = ["&#1488;","&#64305;","&#1489;","&#1490;","&#1491;","&#1492;","&#1493;","&#1494;","&#1495;","&#1496;","&#1497;","&#64315;","&#1499;","&#1498;","&#1500;","&#1502;","&#1501;","&#1504;","&#1503;","&#1505;","&#1506;","&#64324;","&#1508;","&#1507;","&#1510;","&#1509;","&#1511;","&#1512;","&#64298;","&#64299;","&#1514;"];
+  hebLetter = ["Alef","Bet","Vet","Gimmel","Dalet","He","Vav","Zayin","Chet","Tet","Yod","Kaf","Chaf","Chaf","Lamed","Mem","Nun","Nun","Samech","Aayin","Pe","Fe","Fe","Tsadi","","Kaf","Resh","Shin","Sin","Tav"];
+  hebLetter = ["Alef","Bet","Vet","gimmel","Dalet","He","Vav","Zayin","Chet","Tet","Yod","Kaf","Chaf","Chaf","lamed","mem","mem","Nun","Nun","samech","Aayin","Pe","Fe","Fe","tsadi","tsadi","Kof","Resh","shin","sin","Tav"];
+  hebLetterWithFinals = ["Alef","Bet","Vet","gimmel","Dalet","He","Vav","Zayin","Chet","Tet","Yod","Kaf","Chaf","FinalChaf","lamed","mem","Finalmem","Nun","FinalNun","samech","Aayin","Pe","Fe","FinalFe","tsadi","Finaltsadi","Kof","Resh","shin","sin","Tav"];
+  sound = ["A","b","v","g","d","h","v","z","ch","t","y","c","ch","ch","l","m","m","n","n","s","A","p","f","f","tz","tz","k","r","sh","s","t"];
+  sound = ["A","B","v","g","d","h","v","z","ch","T","y","K,Q,c","ch","ch","l","M","M","n","n","S","A","p","F","F","ts","ts","k,Q,c","R","sh","S","T"];
+</script>
+
+
+<center>
+<table style="text-align:right;">
+<tr>
+<script>
+function dropForSofit(ev) {
+  var data = ev.dataTransfer.getData("text");
+  if (!data.includes('ForSofit')) {return;}
+  if (data.includes('Final') && (data.includes('Chaf')||data.includes('mem')||data.includes('Nun')||data.includes('Fe')||data.includes('tsadi'))) {
+    ev.preventDefault()
+    ev.target.style.background = '#A5FF8F';
+    ev.target.appendChild(document.getElementsByClassName(data)[0]);
+    $("." + data).removeAttr("draggable");
+    $("." + data).removeAttr("ondragstart");
+    $("." + data).html( $("." + data).attr("data-alefbet") + " " + $("." + data).attr("data-sound") );
+    $("." + data).parent().removeAttr("ondragover");
+    $("." + data).parent().removeAttr("ondrop");
+  } else if (data.includes('Chaf')||data.includes('mem')||data.includes('Nun')||data.includes('Fe')||data.includes('tsadi')) {
+    ev.preventDefault()
+    ev.target.style.background = '#f2c354';
+    setTimeout(function() {ev.target.style.background = "white";},1000);
+  } else {
+    ev.target.style.background = '#E52027';
+    setTimeout(function() {ev.target.style.background = "white";},1000);
+  }
+}
+
+for (i = 7 - 1; i >= 0; i--) {
+    document.write("<td> <span draggable='true' ondragstart='drag(event)' style='font-size:12px; font-weight:lighter;' class='" + hebLetterWithFinals[i] +"ForSofit' data-sound='" + sound[i] + "' data-alefbet='" + alefbet[i] + "'>"  + hebLetter[i] + "=" +  alefbet[i] + " </span>");
+}
+document.write('<tr>');
+for (i = 14 - 1; i >= 7; i--) {
+    document.write("<td> <span draggable='true' ondragstart='drag(event)' style='font-size:12px; font-weight:lighter;' class='" + hebLetterWithFinals[i] +"ForSofit' data-sound='" + sound[i] + "' data-alefbet='" + alefbet[i] + "'>"  + hebLetter[i] + "=" +  alefbet[i] + " </span>");
+}
+document.write('<tr>');
+for (i = 21 - 1; i >= 14; i--) {
+    document.write("<td> <span draggable='true' ondragstart='drag(event)' style='font-size:12px; font-weight:lighter;' class='" + hebLetterWithFinals[i] +"ForSofit' data-sound='" + sound[i] + "' data-alefbet='" + alefbet[i] + "'>"  + hebLetter[i] + "=" +  alefbet[i] + " </span>");
+}
+document.write('<tr>');
+for (i = 28 - 1; i >= 21; i--) {
+    document.write("<td> <span draggable='true' ondragstart='drag(event)' style='font-size:12px; font-weight:lighter;' class='" + hebLetterWithFinals[i] +"ForSofit' data-sound='" + sound[i] + "' data-alefbet='" + alefbet[i] + "'>"  + hebLetter[i] + "=" +  alefbet[i] + " </span>");
+}
+document.write('<tr>');
+for (i = 1; i <= 4; i++) { 
+  document.write("<td style='background:#EAEAEA'>");
+}
+for (i = alefbet.length-1; i > 28-1; i--) {
+    document.write("<td> <span draggable='true' ondragstart='drag(event)' style='font-size:12px; font-weight:lighter;' class='" + hebLetterWithFinals[i] +"ForSofit' data-sound='" + sound[i] + "' data-alefbet='" + alefbet[i] + "'>"  + hebLetter[i] + "=" +  alefbet[i] + " </span>");
+}
+
+</script>
+</table>
+</center>
+
+<br>
+
+<table align="center" width="90%" height="52px">
+<tr> 
+<script>
+for (i = 0; i < 5; i++) { 
+    document.write('<td ondrop="dropForSofit(event)" ondragover="allowDrop(event)" width="20%">');
+}
+</script>
+</table>
+
+<div style="margin-bottom: 18px;"> &#x2000; </div>
+</div>
+<!-- end "sofit" -->
+
+<!-- homonymn -->
+<div>
+<span style="font-size:10px; font-weight:lighter;"> Drag the letters that sound alike </span> <br> <br>
+
+<script>
+  alefbet = ["&#1488;","&#64305;","&#1489;","&#1490;","&#1491;","&#1492;","&#1493;","&#1494;","&#1495;","&#1496;","&#1497;","&#64315;","&#1499;","&#1500;","&#1502;","&#1504;","&#1505;","&#1506;","&#64324;","&#1508;","&#1510;","&#1511;","&#1512;","&#64298;","&#64299;","&#1514;"];
+  alefbetEscape = ["1488","64305","1489","1490","1491","1492","1493","1494","1495","1496","1497","64315","1499","1500","1502","1504","1505","1506","64324","1508","1510","1511","1512","64298","64299","1514"];
+  hebLetter = ["Alef","Bet","Vet","Gimmel","Dalet","He","Vav","Zayin","Chet","Tet","Yod","Kaf","Chaf","Lamed","Mem","Nun","Samech","Aayin","Pe","Fe","Tsadi","","Kaf","Resh","Shin","Sin","Tav"];
+  hebLetter = ["Alef","Bet","Vet","gimmel","Dalet","He","Vav","Zayin","Chet","Tet","Yod","Kof","Chaf","lamed","mem","Nun","samech","Aayin","Pe","Fe","tsadi","Kaf","Resh","shin","sin","Tav"];
+  sound = ["A","b","v","g","d","h","v","z","ch","t","y","c","ch","l","m","n","s","A","p","f","tz","","k","r","sh","s","t"];
+  sound = ["A","B","v","g","d","h","v","z","ch","T","y","K,Q,c","ch","l","M","n","S","A","p","F","ts","K,Q,c","R","sh","S","T"];
+</script>
+
+<center>
+<table style="text-align:right;">
+<tr>
+<script>
+function dragForHomonym(ev) {
+  ev.dataTransfer.setData('text', '{class:' + ev.target.className + ',' +
+                                  ' data-alefbetEscape:' + ev.target.getAttribute('data-alefbetEscape') + ',' + 
+                                  ' data-hebLetter:' + ev.target.getAttribute('data-hebLetter') + ',' +
+                                  ' data-sound:' + ev.target.getAttribute('data-sound') +
+                                  '}');
+}
+
+function dropForHomonym(ev) {
+  ev.preventDefault()
+  var data = ev.dataTransfer.getData("text");
+  if (!data.includes("Homonym")) { 
+      return; 
+  }
+  //  data = data.replace(/([a-zA-Z0-9-]+):([a-zA-Z0-9-]+)/g, "\"$1\":\"$2\"");
+  data = data.replace(/([a-zA-Z0-9-]+):((K,Q,c)|([a-zA-Z0-9-]+))/g, "\"$1\":\"$2\"");
+  var JSONdata = JSON.parse(data);
+  if (ev.target.hasAttribute("class")) { target = ev.target; } else { target = ev.target.closest(".ForHomonymDrop"); } 
+  if ((target.getAttribute("data-sound") == "null")|(target.getAttribute("data-sound") == null)) {
+    homonymDrops = document.getElementsByClassName("ForHomonymDrop");
+    for (i=0; i < homonymDrops.length; i++) {
+      if (JSONdata['data-sound'] == homonymDrops[i].getAttribute("data-sound")) { 
+      //  the dragged cell is a match for a different cell 
+          ev.target.style.background = '#f2c354';
+          setTimeout(function() {ev.target.style.background = "white";},1000);
+          return; 
+      }
+    } 
+    if (JSONdata['data-sound']=="A"||JSONdata['data-sound']=="v"||JSONdata['data-sound']=="ch"||JSONdata['data-sound']=="T"||JSONdata['data-sound']=="K,Q,c"||JSONdata['data-sound']=="S") {
+      // the dragged cell is a correct answer
+      target.setAttribute("data-ida", JSONdata['data-alefbetEscape']); 
+      target.setAttribute("data-hebLettera", JSONdata['data-hebLetter']); 
+      target.setAttribute("data-sound", JSONdata['data-sound']); 
+      target.childNodes[1].getElementsByTagName("td")[0].append(String.fromCharCode(JSONdata['data-alefbetEscape']) + " " + JSONdata['data-hebLetter']);
+      target.childNodes[1].getElementsByTagName("td")[3].append("=" + JSONdata['data-sound']);
+      $(".Homonym[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").parent().attr("style","background:#EAEAEA;")
+      $(".Homonym[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").parent().html("");
+    } else {
+        // the dragged cell is not a correct answer
+      target.style.background = '#E52027';
+      setTimeout(function() {target.style.background = "white";},1000);
+    } 
+  } else {
+      // the target cell already contains a letter
+    homonymDrops = document.getElementsByClassName("ForHomonymDrop");
+    for (i=0; i < homonymDrops.length; i++) {
+      if ((homonymDrops[i].getAttribute("data-sound")==JSONdata['data-sound'])&&(target.getAttribute("data-sound")==JSONdata['data-sound']))  {
+        // this is a match
+        target.setAttribute("data-idb", JSONdata['data-alefbetEscape']); 
+        target.setAttribute("data-hebLetterb", JSONdata['data-hebLetter']); 
+        target.childNodes[1].getElementsByTagName("td")[4].append(String.fromCharCode(JSONdata['data-alefbetEscape']) + " " + JSONdata['data-hebLetter']);
+        target.style.background = '#A5FF8F';
+        target.removeAttribute("ondragover");
+        target.removeAttribute("ondrop");
+        $(".Homonym[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").parent().attr("style","background:#EAEAEA;")
+        $(".Homonym[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").parent().html("");
+        return;
+      }
+    }
+    if (JSONdata['data-sound']=="A"||JSONdata['data-sound']=="v"||JSONdata['data-sound']=="ch"||JSONdata['data-sound']=="T"||JSONdata['data-sound']=="K,Q,c"||JSONdata['data-sound']=="S") {
+      // this is a match elsewhere
+      target.style.background = '#f2c354';
+      setTimeout(function() {target.style.background = "white";},1000);
+      return; 
+    } 
+    // this is not a match
+    target.style.background = '#E52027';
+    setTimeout(function() {target.style.background = "white";},1000);
+    return;
+  }
+//    if (data.includes('Alef')||data.includes('Bet')||data.includes('Vav')||data.includes('Chet')||data.includes('Tet')||data.includes('Kaf')||
+//        data.includes('Chaf')||data.includes('Samech')||data.includes('Aayin')||data.includes('Kaf')||data.includes('sin')) {
+//      ev.preventDefault()
+//      ev.target.style.background = '#A5FF8F';
+//      ev.target.getAttribute('data-hebLetterA') = data;
+//      ev.target.getAttribute('data-hebLetterA') = data;
+//      $("." + data).removeAttr("draggable");
+//      $("." + data).removeAttr("ondragstart");
+//      $("." + data).parent().removeAttr("ondragover");
+//      $("." + data).parent().removeAttr("ondrop");
+//    } else {
+//      ev.target.style.background = '#E52027';
+//      setTimeout(function() {ev.target.style.background = "white";},1000);
+//    }
+//  }
+}
+
+for (i = alefbet.length - 17 - 1; i >= 0; i--) {
+    document.write("<td width='42px'> <span draggable='true' ondragstart='dragForHomonym(event)' class='Homonym' style='font-size:12px;' data-sound='" + sound[i] + "' data-alefbet='" + alefbet[i] + "' data-alefbetEscape='" + alefbetEscape[i] + "' data-hebLetter='" + hebLetter[i] + "'> <span style='font-weight:lighter'>" + sound[i] + "=</span>" +  alefbet[i] + " </span>");
+}
+document.write('<tr>');
+for (i = alefbet.length - 8 - 1; i >= 9; i--) {
+    document.write("<td width='42px'> <span draggable='true' ondragstart='dragForHomonym(event)' class='Homonym' style='font-size:12px;' data-sound='" + sound[i] + "' data-alefbet='" + alefbet[i] + "' data-alefbetEscape='" + alefbetEscape[i] + "' data-hebLetter='" + hebLetter[i] + "'> <span style='font-weight:lighter'>" + sound[i] + "=</span>" +  alefbet[i] + " </span>");
+}
+document.write('<tr> <td width="42px" style="background:#EAEAEA;">');
+for (i = alefbet.length - 1; i > 18 - 1; i--) {
+    document.write("<td width='42px'> <span draggable='true' ondragstart='dragForHomonym(event)' class='Homonym' style='font-size:12px;' data-sound='" + sound[i] + "' data-alefbet='" + alefbet[i] + "' data-alefbetEscape='" + alefbetEscape[i] + "' data-hebLetter='" + hebLetter[i] + "'> <span style='font-weight:lighter'>" + sound[i] + "=</span>" +  alefbet[i] + " </span>");
+}
+</script>
+</table>
+</center>
+
+<br>
+
+<table align="center" width="360x" height="52px">
+<tr> 
+<script>
+for (i = 1; i <= 6; i++) { 
+    if (i ==4) { document.write("<tr>"); }
+    document.write('<td class="ForHomonymDrop" ondrop="dropForHomonym(event)" ondragover="allowDrop(event)" width="133px" data-idA=null data-hebLetterA=null data-idB=null data-hebLetterB=null data-sound=null> <table> <tr> <td width="67%" height="24px" align="right" style="border:none; text-align:right;"> <td width="33%" height="24px" style="border:none;"> <tr> <td width="67%" height="24px" align="right" style="border:none; text-align:right;"> <td width="33%" height="24px" style="border:none; text-align:left;"> <tr> <td width="67%" height="24px" align="right" style="border:none; text-align:right;"> <td width="33%" height="24px" style="border:none;"> </table> ');
+}
+</script>
+</table>
+
+<div style="margin-bottom:18px;"> &#x2000; </div>
+
+
+<!-- end "homonym" -->
+</div>
+
+
+
+
+<!-- lookalike -->
+<div> 
+
+<span style="font-size:10px; font-weight:lighter;"> Drag the letters that look alike: </span> <br> <br>
+
+<script>
+  alefbet = ["&#1488;","&#64305;","&#1489;","&#1490;","&#1491;","&#1492;","&#1493;","&#1494;","&#1495;","&#1496;","&#1497;","&#64315;","&#1499;","&#1498;","&#1500;","&#1502;","&#1501;","&#1504;","&#1503;","&#1505;","&#1506;","&#64324;","&#1508;","&#1507;","&#1510;","&#1509;","&#1511;","&#1512;","&#64298;","&#64299;","&#1514;"];
+  alefbetEscape = ["1488","64305","1489","1490","1491","1492","1493","1494","1495","1496","1497","64315","1499","1498","1500","1502","1501","1504","1503","1505","1506","64324","1508","1507","1510","1509","1511","1512","64298","64299","1514"];
+  hebLetter = ["Alef","Bet","Vet","Gimmel","Dalet","He","Vav","Zayin","Chet","Tet","Yod","Kaf","Chaf","Chaf","Lamed","Mem","Nun","Nun","Samech","Aayin","Pe","Fe","Fe","Tsadi","","Kaf","Resh","Shin","Sin","Tav"];
+  hebLetter = ["alef","Bet","Vet","gimmel","dalet","He","vav","zayin","chet","tet","yod","Kaf","Chaf","Chaf","lamed","mem","mem","nun","nun","samech","Aayin","Pe","Fe","Fe","tsadi","tsadi","Kaf","resh","shin","sin","tav"];
+  sound = ["A","b","v","g","d","h","v","z","ch","t","y","c","ch","ch","l","m","m","n","n","s","A","p","f","f","tz","tz","k","r","sh","s","t"];
+  sound = ["A","B","v","g","d","h","V","z","ch","t","y","k,Q,c","ch","ch","l","m","m","n","n","S","A","p","F","F","ts","ts","k,Q,c","r","sh","S","t"];
+</script>
+
+<center>
+<table style="text-align:right;">
+<tr>
+<script>
+function dragForLookalike(ev) {
+  ev.dataTransfer.setData('text', '{class:' + ev.target.className + ',' +
+                                  ' data-alefbetEscape:' + ev.target.getAttribute('data-alefbetEscape') + ',' + 
+                                  ' data-hebLetter:' + ev.target.getAttribute('data-hebLetter') +
+                                  '}');
+}
+
+function dropForLookalike(ev) {
+  var data = ev.dataTransfer.getData("text");
+  if (!data.includes('Lookalike')) {return;}
+  data = data.replace(/([a-zA-Z0-9-]+):((K,Q,c)|([a-zA-Z0-9-]+))/g, "\"$1\":\"$2\"");
+  var JSONdata = JSON.parse(data);
+  target = ev.target; 
+  lookalikeDrops = document.getElementsByClassName("ForLookalikeDrop");
+  // check whether this is a first letter
+  if ((target.getAttribute("data-hebLetterA") == "null")|(target.getAttribute("data-hebLetterA") == null)) {
+    // check whether this letter is potentially correct first letter
+    if (
+          JSONdata['data-hebLetter'] == "Bet" ||
+          JSONdata['data-hebLetter'] == "Vet" ||
+          JSONdata['data-hebLetter'] == "dalet" ||
+          JSONdata['data-hebLetter'] == "vav" ||
+          JSONdata['data-hebLetter'] == "zayin" ||
+	  JSONdata['data-hebLetter'] == "chet" ||
+          JSONdata['data-hebLetter'] == "yod" || 
+          JSONdata['data-alefbetEscape'] == "64315" ||
+          JSONdata['data-alefbetEscape'] == "1503" ||
+          JSONdata['data-hebLetter'] == "resh" ||
+	  JSONdata['data-hebLetter'] == "tav" 
+       ) {
+          // the dragged cell is potentially correct
+          if (JSONdata['data-hebLetter'] == "Bet") {
+            otherBetFound = false;
+            remainingMatches = 2;
+            for (i=0; i < lookalikeDrops.length; i++) {
+            if (lookalikeDrops[i].getAttribute('data-hebLetterA')=="Bet"||lookalikeDrops[i].getAttribute('data-hebLetterB')=="Bet") {
+                  otherBetFound = true; 
+                  remainingMatches--;
+              } else if ( lookalikeDrops[i].getAttribute('data-hebLetterA')=="Vet"||lookalikeDrops[i].getAttribute('data-alefbetEscapeA')=="64315") {
+                  remainingMatches--;
+              }
+            }
+            // handle correct cases first
+            if (otherBetFound == true && remainingMatches == 1) {
+                 // the first letter is correct and not needed elsewhere
+                 $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").parent().attr("style","background:#EAEAEA;");
+                 $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").html("");
+                 target.setAttribute("data-alefbetEscapeA", JSONdata['data-alefbetEscape']);
+                 target.setAttribute("data-hebLetterA", JSONdata['data-hebLetter']);
+                 target.append(String.fromCharCode(JSONdata['data-alefbetEscape']));
+                 return;
+            } else if ( remainingMatches == 0 ) {
+                 //  the dragged cell is a match for a different cell
+                 target.style.background = '#f2c354';
+                 setTimeout(function() {target.style.background = "white";},1000);
+                 return;
+            } else {
+                 // the first letter is correct and can be used again, produce the output and set the data and we are done
+                 target.setAttribute("data-alefbetEscapeA", JSONdata['data-alefbetEscape']);
+                 target.setAttribute("data-hebLetterA", JSONdata['data-hebLetter']);
+                 target.append(String.fromCharCode(JSONdata['data-alefbetEscape']));
+                 return;
+            }
+          }
+          if (JSONdata['data-hebLetter'] == "Vet") {
+            remainingMatches = 2;
+            for (i=0; i < lookalikeDrops.length; i++) {
+              if (lookalikeDrops[i].getAttribute('data-hebLetterA')=="Bet") {
+                  remainingMatches--;
+              }
+            }
+            if ( remainingMatches > 0 ) {
+                // the first letter is correct and not needed elsewhere
+                $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").parent().attr("style","background:#EAEAEA;");
+                $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").html("");
+                target.setAttribute("data-alefbetEscapeA", JSONdata['data-alefbetEscape']);
+                target.setAttribute("data-hebLetterA", JSONdata['data-hebLetter']);
+                target.append(String.fromCharCode(JSONdata['data-alefbetEscape']));
+                return;
+            } else {
+                //  the dragged cell is a match for a different cell
+                target.style.background = '#f2c354';
+                setTimeout(function() {target.style.background = "white";},1000);
+                return;
+            }
+          }
+          if (JSONdata['data-hebLetter'] == "dalet") { 
+            remainingMatches = 1;
+            for (i=0; i < lookalikeDrops.length; i++) {
+              if (lookalikeDrops[i].getAttribute('data-hebLetterA')=="resh") {
+                  remainingMatches--;
+              }
+            }
+            if ( remainingMatches > 0 ) {
+                // the first letter is correct and not needed elsewhere
+                $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").parent().attr("style","background:#EAEAEA;");
+                $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").html("");
+                target.setAttribute("data-alefbetEscapeA", JSONdata['data-alefbetEscape']);
+                target.setAttribute("data-hebLetterA", JSONdata['data-hebLetter']);
+                target.append(String.fromCharCode(JSONdata['data-alefbetEscape']));
+                return;
+            } else {
+                //  the dragged cell is a match for a different cell
+                target.style.background = '#f2c354';
+                setTimeout(function() {target.style.background = "white";},1000);
+                return;
+            }
+          }
+          if (JSONdata['data-hebLetter'] == "vav") {
+            otherVavFound = false;
+            remainingMatches = 2;
+            for (i=0; i < lookalikeDrops.length; i++) {
+              if (lookalikeDrops[i].getAttribute('data-hebLetterA')=="vav"||lookalikeDrops[i].getAttribute('data-hebLetterB')=="vav"||lookalikeDrops[i].getAttribute('data-hebLetterC')=="vav") {
+                  otherVavFound = true; 
+                  remainingMatches--;
+              } else if ( lookalikeDrops[i].getAttribute('data-hebLetterA')=="zayin" ||
+                          lookalikeDrops[i].getAttribute('data-hebLetterA')=="yod" ||
+                          lookalikeDrops[i].getAttribute('data-alefbetEscapeA')=="1503" ) {
+                  remainingMatches--;
+              }
+            }
+            // handle correct cases first
+            if (otherVavFound == true && remainingMatches == 1) {
+                 // the first letter is correct and not needed elsewhere
+                 $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").parent().attr("style","background:#EAEAEA;");
+                 $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").html("");
+                 target.setAttribute("data-alefbetEscapeA", JSONdata['data-alefbetEscape']);
+                 target.setAttribute("data-hebLetterA", JSONdata['data-hebLetter']);
+                 target.append(String.fromCharCode(JSONdata['data-alefbetEscape']));
+                 return;
+            } else if ( remainingMatches == 0 ) {
+                 //  the dragged cell is a match for a different cell
+                 target.style.background = '#f2c354';
+                 setTimeout(function() {target.style.background = "white";},1000);
+                 return;
+            } else {
+                 // the first letter is correct and can be used again, produce the output and set the data and we are done
+                 target.setAttribute("data-alefbetEscapeA", JSONdata['data-alefbetEscape']);
+                 target.setAttribute("data-hebLetterA", JSONdata['data-hebLetter']);
+                 target.append(String.fromCharCode(JSONdata['data-alefbetEscape']));
+                 return;
+            }
+          }
+          if (JSONdata['data-hebLetter'] == "zayin") {
+            remainingMatches = 2;
+            for (i=0; i < lookalikeDrops.length; i++) {
+              if ( lookalikeDrops[i].getAttribute('data-hebLetterA')=="vav" ||
+                   lookalikeDrops[i].getAttribute('data-hebLetterA')=="yod" ||
+                   lookalikeDrops[i].getAttribute('data-alefbetEscapeA')=="1503"
+                 ) {
+                  remainingMatches--;
+              }
+            }
+            if ( remainingMatches > 0 ) {
+                // the first letter is correct and not needed elsewhere
+                $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").parent().attr("style","background:#EAEAEA;");
+                $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").html("");
+                target.setAttribute("data-alefbetEscapeA", JSONdata['data-alefbetEscape']);
+                target.setAttribute("data-hebLetterA", JSONdata['data-hebLetter']);
+                target.append(String.fromCharCode(JSONdata['data-alefbetEscape']));
+                return;
+            } else {
+                //  the dragged cell is a match for a different cell
+                target.style.background = '#f2c354';
+                setTimeout(function() {target.style.background = "white";},1000);
+                return;
+            }
+          }
+	  if (JSONdata['data-hebLetter'] == "chet") {
+            remainingMatches = 1;
+            for (i=0; i < lookalikeDrops.length; i++) {
+              if (lookalikeDrops[i].getAttribute('data-hebLetterA')=="tav") {
+                  remainingMatches--;
+              }
+            }
+            if ( remainingMatches > 0 ) {
+                // the first letter is correct and not needed elsewhere
+                $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").parent().attr("style","background:#EAEAEA;");
+                $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").html("");
+                target.setAttribute("data-alefbetEscapeA", JSONdata['data-alefbetEscape']);
+                target.setAttribute("data-hebLetterA", JSONdata['data-hebLetter']);
+                target.append(String.fromCharCode(JSONdata['data-alefbetEscape']));
+                return;
+            } else {
+                //  the dragged cell is a match for a different cell
+                target.style.background = '#f2c354';
+                setTimeout(function() {target.style.background = "white";},1000);
+                return;
+            }
+          }
+          if (JSONdata['data-hebLetter'] == "yod") {
+            remainingMatches = 2;
+            for (i=0; i < lookalikeDrops.length; i++) {
+              if ( lookalikeDrops[i].getAttribute('data-hebLetterA')=="vav") {
+                  remainingMatches--; 
+              } else if (lookalikeDrops[i].getAttribute('data-alefbetEscapeA')=="1503") {
+                  remainingMatches = 0; 
+              }
+            }
+            if ( remainingMatches > 0 ) {
+                // the first letter is correct and not needed elsewhere
+                $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").parent().attr("style","background:#EAEAEA;");
+                $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").html("");
+                target.setAttribute("data-alefbetEscapeA", JSONdata['data-alefbetEscape']);
+                target.setAttribute("data-hebLetterA", JSONdata['data-hebLetter']);
+                target.append(String.fromCharCode(JSONdata['data-alefbetEscape']));
+                return;
+            } else {
+                //  the dragged cell is a match for a different cell
+                target.style.background = '#f2c354';
+                setTimeout(function() {target.style.background = "white";},1000);
+                return;
+            }
+          }
+          if (JSONdata['data-alefbetEscape'] == "64315") {
+            remainingMatches = 2;
+            for (i=0; i < lookalikeDrops.length; i++) {
+              if (lookalikeDrops[i].getAttribute('data-hebLetterA')=="Bet"||lookalikeDrops[i].getAttribute('data-hebLetterA')=="Vet") {
+                  remainingMatches--;
+              }
+            }
+            if ( remainingMatches > 0 ) {
+                // the first letter is correct and not needed elsewhere
+                $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").parent().attr("style","background:#EAEAEA;");
+                $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").html("");
+                target.setAttribute("data-alefbetEscapeA", JSONdata['data-alefbetEscape']);
+                target.setAttribute("data-hebLetterA", JSONdata['data-hebLetter']);
+                target.append(String.fromCharCode(JSONdata['data-alefbetEscape']));
+                return;
+            } else {
+                //  the dragged cell is a match for a different cell
+                target.style.background = '#f2c354';
+                setTimeout(function() {target.style.background = "white";},1000);
+                return;
+            }
+          }
+          if (JSONdata['data-alefbetEscape'] == "1503") {
+            remainingMatches = 2;
+            for (i=0; i < lookalikeDrops.length; i++) {
+              if ( lookalikeDrops[i].getAttribute('data-hebLetterA')=="vav") {
+                  remainingMatches--; 
+              } else if (lookalikeDrops[i].getAttribute('data-hebLetterA')=="yod") {
+                  remainingMatches = 0; 
+              }
+            }
+            if ( remainingMatches > 0 ) {
+                // the first letter is correct and not needed elsewhere
+                $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").parent().attr("style","background:#EAEAEA;");
+                $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").html("");
+                target.setAttribute("data-alefbetEscapeA", JSONdata['data-alefbetEscape']);
+                target.setAttribute("data-hebLetterA", JSONdata['data-hebLetter']);
+                target.append(String.fromCharCode(JSONdata['data-alefbetEscape']));
+                return;
+            } else {
+                //  the dragged cell is a match for a different cell
+                target.style.background = '#f2c354';
+                setTimeout(function() {target.style.background = "white";},1000);
+                return;
+            }
+          }
+          if (JSONdata['data-hebLetter'] == "resh") {
+            remainingMatches = 1;
+            for (i=0; i < lookalikeDrops.length; i++) {
+              if (lookalikeDrops[i].getAttribute('data-hebLetterA')=="dalet") {
+                  remainingMatches--;
+              }
+            }
+            if ( remainingMatches > 0 ) {
+                // the first letter is correct and not needed elsewhere
+                $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").parent().attr("style","background:#EAEAEA;");
+                $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").html("");
+                target.setAttribute("data-alefbetEscapeA", JSONdata['data-alefbetEscape']);
+                target.setAttribute("data-hebLetterA", JSONdata['data-hebLetter']);
+                target.append(String.fromCharCode(JSONdata['data-alefbetEscape']));
+                return;
+            } else {
+                //  the dragged cell is a match for a different cell
+                target.style.background = '#f2c354';
+                setTimeout(function() {target.style.background = "white";},1000);
+                return;
+            }
+          }
+	  if (JSONdata['data-hebLetter'] == "tav") {
+            remainingMatches = 1;
+            for (i=0; i < lookalikeDrops.length; i++) {
+              if (lookalikeDrops[i].getAttribute('data-hebLetterA')=="chet") {
+                remainingMatches--;
+              }
+            }
+            if ( remainingMatches > 0 ) {
+                // the first letter is correct and not needed elsewhere
+                $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").parent().attr("style","background:#EAEAEA;");
+                $(".Lookalike[data-hebLetter='" + JSONdata['data-hebLetter']  + "']").html("");
+                target.setAttribute("data-alefbetEscapeA", JSONdata['data-alefbetEscape']);
+                target.setAttribute("data-hebLetterA", JSONdata['data-hebLetter']);
+                target.append(String.fromCharCode(JSONdata['data-alefbetEscape']));
+                return;
+            } else {
+                //  the dragged cell is a match for a different cell
+                target.style.background = '#f2c354';
+                setTimeout(function() {target.style.background = "white";},1000);
+                return;
+            }
+          }
+        } else {
+                //  the dragged cell is incorrect
+                target.style.background = '#E52027';
+                setTimeout(function() {target.style.background = "white";},1000);
+                return;
+        }
+  } else if ((target.getAttribute("data-hebLetterB") == "null")|(target.getAttribute("data-hebLetterB") == null)) {
+
+      // this is a second letter 
+      // check whether this letter is potentially correct letter
+      if (
+            JSONdata['data-hebLetter'] == "Bet" ||
+            JSONdata['data-hebLetter'] == "Vet" ||
+            JSONdata['data-hebLetter'] == "dalet" ||
+            JSONdata['data-hebLetter'] == "vav" ||
+            JSONdata['data-hebLetter'] == "zayin" ||
+            JSONdata['data-hebLetter'] == "chet" ||
+            JSONdata['data-hebLetter'] == "yod" || 
+            JSONdata['data-alefbetEscape'] == "64315" ||
+            JSONdata['data-alefbetEscape'] == "1503" ||
+            JSONdata['data-hebLetter'] == "resh" ||
+            JSONdata['data-hebLetter'] == "tav" 
+          ) {
+            // the dragged cell is potentially correct
+  
+            // look for a match
+            if (
+                 ( JSONdata['data-hebLetter']=="Bet" && (target.getAttribute("data-hebLetterA")=="Vet"||target.getAttribute("data-alefbetEscapeA")=="64315") ) ||
+                 (JSONdata['data-hebLetter'] == "Vet" && target.getAttribute("data-hebLetterA")=="Bet") ||
+                 (JSONdata['data-hebLetter'] == "dalet" && target.getAttribute("data-hebLetterA")=="resh") ||
+                 ( JSONdata['data-hebLetter'] == "vav" && (target.getAttribute("data-hebLetterA")=="zayin"||
+                                                           target.getAttribute("data-hebLetterA")=="yod"||
+                                                           target.getAttribute("data-alefbetEscapeA")=="1503") ) ||
+                 (JSONdata['data-hebLetter'] == "zayin" && target.getAttribute("data-hebLetterA")=="vav") ||
+                 ( JSONdata['data-hebLetter'] == "yod" && (target.getAttribute("data-hebLetterA")=="vav"||
+                                                           target.getAttribute("data-alefbetEscapeA")=="1503") ) ||
+                 (JSONdata['data-hebLetter'] == "chet" && target.getAttribute("data-hebLetterA")=="tav") ||
+                 (JSONdata["data-alefbetEscape"]=="64315" && target.getAttribute("data-hebLetterA")=="Bet") ||
+                 ( JSONdata["data-alefbetEscape"]=="1503" && (target.getAttribute("data-hebLetterA")=="vav" ||
+                                                             target.getAttribute("data-hebLetterA")=="yod") ) ||
+                 (JSONdata['data-hebLetter'] == "resh" && target.getAttribute("data-hebLetterA")=="dalet") ||
+                 (JSONdata['data-hebLetter'] == "tav" && target.getAttribute("data-hebLetterA")=="chet")
+               ) {
+                    // there is a match
+                  if (
+                      JSONdata['data-hebLetter'] == "Vet" ||
+                      JSONdata['data-hebLetter'] == "dalet" ||
+                      JSONdata['data-hebLetter'] == "zayin" ||
+	              JSONdata['data-hebLetter'] == "chet" ||
+                      JSONdata['data-alefbetEscape'] == "64315" ||
+                      JSONdata['data-hebLetter'] == "resh" ||
+                      JSONdata['data-hebLetter'] == "tav" 
+                     ) {
+                         // letter is not needed elsewhere
+                         $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").parent().attr("style","background:#EAEAEA;");
+                         $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").html("");
+                         target.setAttribute("data-alefbetEscapeB", JSONdata['data-alefbetEscape']);
+                         target.setAttribute("data-hebLetterB", JSONdata['data-hebLetter']);
+                         target.prepend(String.fromCharCode(JSONdata['data-alefbetEscape']) + " , ");
+                         target.style.background = '#A5FF8F';
+                         target.removeAttribute("ondragover");
+                         target.removeAttribute("ondrop");
+                         return;
+                     } else if (JSONdata['data-hebLetter'] == "Bet") {
+                         otherBetFound = false;
+                         remainingMatches = 2;
+                         for (i=0; i < lookalikeDrops.length; i++) {
+                           if (lookalikeDrops[i].getAttribute('data-hebLetterA')=="Bet"||lookalikeDrops[i].getAttribute('data-hebLetterB')=="Bet") {
+                             otherBetFound = true; 
+                           }
+                         }
+                         if (otherBetFound == true ) {
+                           // letter is not needed elsewhere
+                           $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").parent().attr("style","background:#EAEAEA;");
+                           $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").html("");
+                           target.setAttribute("data-alefbetEscapeB", JSONdata['data-alefbetEscape']);
+                           target.setAttribute("data-hebLetterB", JSONdata['data-hebLetter']);
+                           target.prepend(String.fromCharCode(JSONdata['data-alefbetEscape']) + " , ");
+                           target.style.background = '#A5FF8F';
+                           target.removeAttribute("ondragover");
+                           target.removeAttribute("ondrop");
+                           return;
+                         } else {
+                           // the second letter is correct and can be used again, produce the output and set the data and we are done
+                           target.setAttribute("data-alefbetEscapeB", JSONdata['data-alefbetEscape']);
+                           target.setAttribute("data-hebLetterB", JSONdata['data-hebLetter']);
+                           target.prepend(String.fromCharCode(JSONdata['data-alefbetEscape']) + " , ");
+                           target.style.background = '#A5FF8F';
+                           target.removeAttribute("ondragover");
+                           target.removeAttribute("ondrop");
+                           return;
+                        }
+                     } else if (JSONdata['data-hebLetter'] == "yod" || JSONdata['data-alefbetEscape'] == "1503") {
+                           otherVavFound = false;
+                           otherYodOrNunFound = false;
+                           for (i=0; i < lookalikeDrops.length; i++) {
+                             if (lookalikeDrops[i].getAttribute('data-hebLetterA')=="vav"||
+                                 lookalikeDrops[i].getAttribute('data-hebLetterB')=="vav"||
+                                 lookalikeDrops[i].getAttribute('data-hebLetterC')=="vav") {
+                               otherVavFound = true; 
+                             }
+                             if (lookalikeDrops[i].getAttribute('data-hebLetterA')=="yod"||lookalikeDrops[i].getAttribute('data-hebLetterB')=="yod"||
+                                 lookalikeDrops[i].getAttribute('data-alefbetEscapeA')=="1503"||lookalikeDrops[i].getAttribute('data-alefbetEscapeB')=="1503") {
+                               otherYodOrNunFound = true; 
+                             }
+                           }
+                           if (otherYodOrNunFound == false) {
+                             // letter is not needed elsewhere
+                             $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").parent().attr("style","background:#EAEAEA;");
+                             $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").html("");
+                             target.setAttribute("data-alefbetEscapeB", JSONdata['data-alefbetEscape']);
+                             target.setAttribute("data-hebLetterB", JSONdata['data-hebLetter']);
+                             target.prepend(String.fromCharCode(JSONdata['data-alefbetEscape']) + " , ");
+                             return;
+                           } else if ( otherYodOrNunFound == true && (otherVavFound==false||( otherVavFound==true && target.getAttribute('data-hebLetterA')!="vav" ) ) ) {
+                             // letter is not needed elsewhere
+                             $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").parent().attr("style","background:#EAEAEA;");
+                             $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").html("");
+                             target.setAttribute("data-alefbetEscapeB", JSONdata['data-alefbetEscape']);
+                             target.setAttribute("data-hebLetterB", JSONdata['data-hebLetter']);
+                             target.prepend(String.fromCharCode(JSONdata['data-alefbetEscape']) + " , ");
+                             return;
+                           } else {
+                             //  the dragged cell is a match for a different cell
+                             target.style.background = '#f2c354';
+                             setTimeout(function() {target.style.background = "white";},1000);
+                             return;
+                           }
+                     } else if (JSONdata['data-hebLetter'] == "vav") {
+                           otherVavFound = false;
+                           otherYodOrNunFound = false;
+                           for (i=0; i < lookalikeDrops.length; i++) {
+                             if (lookalikeDrops[i].getAttribute('data-hebLetterA')=="vav"||
+                                 lookalikeDrops[i].getAttribute('data-hebLetterB')=="vav"||
+                                 lookalikeDrops[i].getAttribute('data-hebLetterC')=="vav") {
+                               otherVavFound = true; 
+                             }
+                             if (lookalikeDrops[i].getAttribute('data-hebLetterA')=="yod"||lookalikeDrops[i].getAttribute('data-hebLetterB')=="yod"||
+                                 lookalikeDrops[i].getAttribute('data-alefbetEscapeA')=="1503"||lookalikeDrops[i].getAttribute('data-alefbetEscapeB')=="1503") {
+                               otherYodOrNunFound = true; 
+                             }
+                           }
+                           if (otherYodOrNunFound == false) {
+                             if (otherVavFound == true) {
+                               // letter is not needed elsewhere
+                               $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").parent().attr("style","background:#EAEAEA;");
+                               $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").html("");
+                             }
+                             target.setAttribute("data-alefbetEscapeB", JSONdata['data-alefbetEscape']);
+                             target.setAttribute("data-hebLetterB", JSONdata['data-hebLetter']);
+                             target.prepend(String.fromCharCode(JSONdata['data-alefbetEscape']) + " , ");
+                             if (target.getAttribute("data-hebLetterA")=="zayin") { 
+                               target.style.background = '#A5FF8F';
+                               target.removeAttribute("ondragover");
+                               target.removeAttribute("ondrop");
+                             }
+                             return;
+                           } else if (otherYodOrNunFound==true&&(target.getAttribute('data-hebLetterA')=="yod"||target.getAttribute('data-alefbetEscapeA')=="1503")) {
+                             if (otherVavFound == true) {
+                               // letter is not needed elsewhere
+                               $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").parent().attr("style","background:#EAEAEA;");
+                               $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").html("");
+                             }
+                             target.setAttribute("data-alefbetEscapeB", JSONdata['data-alefbetEscape']);
+                             target.setAttribute("data-hebLetterB", JSONdata['data-hebLetter']);
+                             target.prepend(String.fromCharCode(JSONdata['data-alefbetEscape']) + " , ");
+                             return;
+                           } else { 
+                             //  the dragged cell is a match for a different cell
+                             target.style.background = '#f2c354';
+                             setTimeout(function() {target.style.background = "white";},1000);
+                             return;
+                           } 
+                     }
+               } else {
+                  //  the dragged cell is a match for a different cell
+                  target.style.background = '#f2c354';
+                  setTimeout(function() {target.style.background = "white";},1000);
+                  return;
+               }
+         } else {
+            //  the dragged cell is incorrect
+            target.style.background = '#E52027';
+            setTimeout(function() {target.style.background = "white";},1000);
+            return;
+         } 
+  } else {
+
+    // this is a third letter
+    // look for a match
+      if (
+          (
+            JSONdata['data-hebLetter'] == "yod" && 
+              (target.getAttribute("data-hebLetterA")=="vav"||target.getAttribute("data-hebLetterB")=="vav") && 
+              (target.getAttribute("data-alefbetEscapeA")=="1503"||target.getAttribute("data-alefbetEscapeB")=="1503")
+          ) || (
+            JSONdata['data-alefbetEscape'] == "1503" &&
+              (target.getAttribute('data-hebLetterA')=="vav"||target.getAttribute('data-hebLetterB')=="vav") && 
+              (target.getAttribute("data-hebLetterA")=="yod"||target.getAttribute("data-hebLetterB")=="yod") 
+          )
+         ) { 
+              // letter is not needed elsewhere
+              $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").parent().attr("style","background:#EAEAEA;");
+              $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").html("");
+              target.setAttribute("data-alefbetEscapeC", JSONdata['data-alefbetEscape']);
+              target.setAttribute("data-hebLetterC", JSONdata['data-hebLetter']);
+              target.prepend(String.fromCharCode(JSONdata['data-alefbetEscape']) + " , ");
+              target.style.background = '#A5FF8F';
+              target.removeAttribute("ondragover");
+              target.removeAttribute("ondrop");
+              return;
+        } else if ( 
+                   JSONdata['data-hebLetter'] == "vav" 
+                       && (target.getAttribute("data-hebLetterA")=="yod"||target.getAttribute("data-hebLetterB")=="yod")
+                       && (target.getAttribute("data-alefbetEscapeA")=="1503"||target.getAttribute("data-alefbetEscapeB")=="1503")
+                  ) {
+                       otherVavFound = false;
+                       for (i=0; i < lookalikeDrops.length; i++) {
+                         if (
+                             lookalikeDrops[i].getAttribute('data-hebLetterA')=="vav"||
+                             lookalikeDrops[i].getAttribute('data-hebLetterB')=="vav"||
+                             lookalikeDrops[i].getAttribute('data-hebLetterC')=="vav"
+                             ) {
+                                otherVavFound = true; 
+                             }
+                       }
+                       if (otherVavFound == true) {
+                         // letter is not needed elsewhere
+                         $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").parent().attr("style","background:#EAEAEA;");
+                         $(".Lookalike[data-alefbetEscape='" + JSONdata['data-alefbetEscape']  + "']").html("");
+                       }
+                       target.setAttribute("data-alefbetEscapeC", JSONdata['data-alefbetEscape']);
+                       target.setAttribute("data-hebLetterC", JSONdata['data-hebLetter']);
+                       target.prepend(String.fromCharCode(JSONdata['data-alefbetEscape']) + " , ");
+                       target.style.background = '#A5FF8F';
+                       target.removeAttribute("ondragover");
+                       target.removeAttribute("ondrop");
+                       return;
+        } else if (
+                   JSONdata['data-hebLetter'] == "Bet" ||
+                   JSONdata['data-hebLetter'] == "Vet" ||
+                   JSONdata['data-hebLetter'] == "dalet" ||
+                   JSONdata['data-hebLetter'] == "zayin" ||
+                   JSONdata['data-hebLetter'] == "chet" ||
+                   JSONdata['data-alefbetEscape'] == "64315" ||
+                   JSONdata['data-hebLetter'] == "resh" ||
+                   JSONdata['data-hebLetter'] == "tav"
+                  ) {
+                     //  the dragged cell is a match for a different cell
+                     target.style.background = '#f2c354';
+                     setTimeout(function() {target.style.background = "white";},1000);
+                     return;
+         } else {
+            //  the dragged cell is incorrect
+            target.style.background = '#E52027';
+            setTimeout(function() {target.style.background = "white";},1000);
+            return;
+         }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+for (i = 7 - 1; i >= 0; i--) {
+    document.write("<td> <span draggable='true' ondragstart='dragForLookalike(event)' style='font-size:12px; font-weight:lighter;' class='Lookalike' data-hebLetter='" + hebLetter[i] + "' data-alefbetEscape='" + alefbetEscape[i] + "' data-alefbet='" + alefbet[i] + "'>"  + hebLetter[i] + "=" +  alefbet[i] + " </span>");
+}
+document.write('<tr>');
+for (i = 14 - 1; i >= 7; i--) {
+    document.write("<td> <span draggable='true' ondragstart='dragForLookalike(event)' style='font-size:12px; font-weight:lighter;' class='Lookalike' data-hebLetter='" + hebLetter[i] + "' data-alefbetEscape='" + alefbetEscape[i] + "' data-alefbet='" + alefbet[i] + "'>"  + hebLetter[i] + "=" +  alefbet[i] + " </span>");
+}
+document.write('<tr>');
+for (i = 21 - 1; i >= 14; i--) {
+    document.write("<td> <span draggable='true' ondragstart='dragForLookalike(event)' style='font-size:12px; font-weight:lighter;' class='Lookalike' data-hebLetter='" + hebLetter[i] + "' data-alefbetEscape='" + alefbetEscape[i] + "' data-alefbet='" + alefbet[i] + "'>"  + hebLetter[i] + "=" +  alefbet[i] + " </span>");
+}
+document.write('<tr>');
+for (i = 28 - 1; i >= 21; i--) {
+    document.write("<td> <span draggable='true' ondragstart='dragForLookalike(event)' style='font-size:12px; font-weight:lighter;' class='Lookalike' data-hebLetter='" + hebLetter[i] + "' data-alefbetEscape='" + alefbetEscape[i] + "' data-alefbet='" + alefbet[i] + "'>"  + hebLetter[i] + "=" +  alefbet[i] + " </span>");
+}
+document.write('<tr>');
+for (i = 1; i <= 4; i++) { 
+  document.write("<td style='background:#EAEAEA'>");
+}
+for (i = alefbet.length-1; i > 28-1; i--) {
+    document.write("<td> <span draggable='true' ondragstart='dragForLookalike(event)' style='font-size:12px; font-weight:lighter;' class='Lookalike' data-hebLetter='" + hebLetter[i] + "' data-alefbetEscape='" + alefbetEscape[i] + "' data-alefbet='" + alefbet[i] + "'>"  + hebLetter[i] + "=" +  alefbet[i] + " </span>");
+}
+
+</script>
+</table>
+</center>
+
+<br>
+
+<table align="center" width="90%" height="52px">
+<tr> 
+<script>
+for (i = 0; i < 6; i++) { 
+    document.write('<td class="ForLookalikeDrop" ondrop="dropForLookalike(event)" ondragover="allowDrop(event)" width="17%" data-hebLetterA=null data-alefbetEscapeA=null data-hebLetterB=null data-alefbetEscapeB=null datahebLetterC=null datalefbetEscapeC=null>');
+}
+</script>
+</table>
+
+<div style="margin-bottom: 18px;"> &#x2000; </div>
+</div>
+<!-- end "lookalike" -->
+
+<!-- guttural -->
+<div>
+<span style="font-size:10px; font-weight:lighter;"> Drag the gutturals, a group of letters pronounced from throat (almost never have a dot in the middle) </span> <br> <br>
+
+<table align="center" width="75%" height="52px">
+  <tr> 
+  <td width="15%" style="background:#A5FF8F;"> (&#1512;)
+  <td width="15%" style="background:#A5FF8F;"> &#1506;
+  <td width="15%" style="background:#A5FF8F;"> &#1495;
+  <td width="15%" style="background:#A5FF8F;"> &#1492;
+  <td width="15%" style="background:#A5FF8F;"> &#1488;
+</table>
+
+<div style="margin-bottom:18px;"> &#x2000; </div>
+
+<!-- end "guttural" -->
+</div>
+
+<!-- guttural -->
+<div>
+<span style="font-size:10px; font-weight:lighter;"> Drag the letters that do not appear in Engllish </span> <br> <br>
+
+<table align="center" width="75%" height="52px">
+  <tr> 
+  <td width="15%" style="background:#A5FF8F;"> ts = &#1510;
+  <td width="15%" style="background:#A5FF8F;"> ch = &#1495; &#1499; 
+  <td width="15%" style="background:#A5FF8F;"> sh = &#64298; 
+</table>
+
+<br>
+
+<table align="center" width="75%" height="52px">
+  <tr> 
+  <td width="15%" style="background:#A5FF8F;"> &#1493;&#1493; = w 
+  <td width="15%" style="background:#A5FF8F;"> '&#1510; = ch
+  <td width="15%" style="background:#A5FF8F;"> '&#1490; = G(e) 
+  <td width="15%" style="background:#A5FF8F;"> '&#1494; = J 
+  <td width="15%" style="background:#A5FF8F;"> &#1488;&#1511;&#1505; = x 
+</table>
+
+<div style="margin-bottom:18px;"> &#x2000; </div>
+
+<!-- end "guttural" -->
+</div>
+
+<div style="font-size:12px" align="center"> <a href="mailto:benjamin.greenspan@gmail.com?subject=The Alephbet">  Contact the author </a> </div>
+
+<!-- end "row 2" div -->
+</div></div>
+
+</div>
+<!-- end "container-fluid" div -->
